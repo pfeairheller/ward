@@ -22,7 +22,8 @@ class Ward(rumps.App):
         super(Ward, self).__init__("Ward")
         self._path = pathlib.Path(__file__).parent.resolve()
         self.HeadDirPath = self._path.absolute()
-
+        status = rumps.MenuItem(title=f'Listening on... {self.admin}')
+        self.menu.add(status)
         self.start(sender=None)
 
     def start(self, sender):

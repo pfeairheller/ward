@@ -2,7 +2,7 @@ SHELL := /bin/zsh
 DIR = $(shell pwd)
 
 clean:
-	rm -rf build dist ward.pkg
+	rm -rf build dist
 
 build: clean
 	pyinstaller --clean --noconfirm main.spec

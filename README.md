@@ -2,6 +2,11 @@
 
 MacOS wrapper around a KERI agent.
 
+### Running locally
+
+    make build
+    ./dist/ward.app/Contents/MacOS/ward
+
 ### Publishing
 
 Requires an identifier and signing certificates configured in an Apple developer account.
