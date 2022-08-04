@@ -1,3 +1,4 @@
+SHELL := /bin/zsh
 DIR = $(shell pwd)
 
 clean:
