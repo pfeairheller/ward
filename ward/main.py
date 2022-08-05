@@ -6,11 +6,11 @@ import pathlib
 import threading
 
 import rumps
-from keri import help
 from keri.app import booting
 from keri.app import directing
 
-logger = help.ogler.getLogger()
+
+# logger = logging.getLogger('ward_log')
 
 
 class Ward(rumps.App):
@@ -20,22 +20,31 @@ class Ward(rumps.App):
 
     def __init__(self, name, *args, **kwargs):
         super(Ward, self).__init__("Ward")
+        self.status = rumps.MenuItem(f'Listening on... {self.admin}')
+        self.menu.add(self.status)
+
         self._path = pathlib.Path(__file__).parent.resolve()
         self.HeadDirPath = self._path.absolute()
-        status = rumps.MenuItem(title=f'Listening on... {self.admin}')
-        self.menu.add(status)
-        self.start(sender=None)
 
-    def start(self, sender):
-        p = pathlib.Path(__file__).parent.resolve()
-        f = open(os.path.join(p, 'config.json'))
-        data = json.load(f)
+        # logger.setLevel(logging.DEBUG)
+        # handler = RotatingFileHandler('ward.log', maxBytes=2000, backupCount=10)
+        # logger.addHandler(handler)
+        #
+        # logger.debug(f'Starting ward {datetime.now()}')
 
-        if data is not None:
-            self.admin = int(data['API_PORT'])
-            self.tcp = int(data['TCP_PORT'])
+        self.start()
 
-        logger.debug(f"HeadDirPath {self.HeadDirPath}\n")
+    def start(self):
+        with open(os.path.join(self._path, 'config.json')) as f:
+            data = json.load(f)
+
+            # logger.debug(f'Loaded config {data} from {self._path}')
+
+            if data is not None:
+                self.admin = int(data['API_PORT'])
+                self.tcp = int(data['TCP_PORT'])
+
+                self.status.title = f'Listening on... {self.admin}'
 
         servery = booting.Servery(port=self.admin)
         booting.setup(servery=servery,

@@ -7,6 +7,9 @@ clean:
 build: clean
 	pyinstaller --clean --noconfirm main.spec
 
+run: build
+	./dist/ward.app/Contents/MacOS/ward
+
 package:
 	pushd dist; \
 	productbuild --identifier $(ward_ident) --sign $(ward_signer) --component ward.app /Applications ward.pkg
