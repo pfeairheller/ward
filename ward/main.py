@@ -1,16 +1,18 @@
 # -*- encoding: utf-8 -*-
 import json
+import logging
 import os
 import os.path
 import pathlib
 import threading
+from datetime import datetime
+from logging.handlers import RotatingFileHandler
 
 import rumps
 from keri.app import booting
 from keri.app import directing
 
-
-# logger = logging.getLogger('ward_log')
+logger = logging.getLogger('ward_log')
 
 
 class Ward(rumps.App):
@@ -26,11 +28,11 @@ class Ward(rumps.App):
         self._path = pathlib.Path(__file__).parent.resolve()
         self.HeadDirPath = self._path.absolute()
 
-        # logger.setLevel(logging.DEBUG)
-        # handler = RotatingFileHandler('ward.log', maxBytes=2000, backupCount=10)
-        # logger.addHandler(handler)
-        #
-        # logger.debug(f'Starting ward {datetime.now()}')
+        logger.setLevel(logging.DEBUG)
+        handler = RotatingFileHandler('ward.log', maxBytes=2000, backupCount=10)
+        logger.addHandler(handler)
+
+        logger.debug(f'Starting ward {datetime.now()}')
 
         self.start()
 
