@@ -25,11 +25,14 @@ class Ward(rumps.App):
         self.status = rumps.MenuItem(f'Listening on... {self.admin}')
         self.menu.add(self.status)
 
-        self._path = pathlib.Path(__file__).parent.resolve()
-        self.HeadDirPath = self._path.absolute()
+        ward_home = os.path.join(pathlib.Path.home(), ".ward")
+        if not os.path.exists(ward_home):
+            os.mkdir(ward_home)
+
+        self.HeadDirPath = ward_home
 
         logger.setLevel(logging.DEBUG)
-        handler = RotatingFileHandler('ward.log', maxBytes=2000, backupCount=10)
+        handler = RotatingFileHandler(os.path.join(ward_home, 'ward.log'), maxBytes=2000, backupCount=10)
         logger.addHandler(handler)
 
         logger.debug(f'Starting ward {datetime.now()}')
@@ -37,7 +40,7 @@ class Ward(rumps.App):
         self.start()
 
     def start(self):
-        with open(os.path.join(self._path, 'config.json')) as f:
+        with open(os.path.join(pathlib.Path(__file__).parent.resolve(), 'config.json')) as f:
             data = json.load(f)
 
             # logger.debug(f'Loaded config {data} from {self._path}')
