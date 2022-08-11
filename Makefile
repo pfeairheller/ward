@@ -1,6 +1,5 @@
 SHELL := /bin/zsh
 DIR = $(shell pwd)
-IDENT = "org.gleif.ward"
 
 clean:
 	rm -rf build dist
@@ -13,11 +12,11 @@ run: build
 
 package:
 	pushd dist; \
-	productbuild --identifier $(IDENT) --sign $(ward_signer) --component ward.app /Applications ward.pkg
+	productbuild --identifier $(WARD_IDENT) --sign $(WARD_INSTALLER) --component ward.app /Applications ward.pkg
 
 noterize:
 	pushd dist; \
-	xcrun notarytool submit ward.pkg --keychain-profile $(IDENT) --wait
+	xcrun notarytool submit ward.pkg --keychain-profile $(WARD_IDENT) --wait
 
 staple:
 	pushd dist; \

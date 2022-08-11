@@ -52,7 +52,7 @@ exe = EXE(
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
-    codesign_identity=os.environ['WARD_CODESIGN'],
+    codesign_identity=os.environ['WARD_SIGNER'],
     entitlements_file='entitlements.plist',
 )
 coll = COLLECT(
@@ -69,5 +69,5 @@ app = BUNDLE(
     coll,
     name='ward.app',
     icon='icon.icns',
-    bundle_identifier='org.gleif.ward',
+    bundle_identifier=os.environ['WARD_IDENT'],
 )
