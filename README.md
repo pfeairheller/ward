@@ -15,7 +15,11 @@ MacOS wrapper around a KERI agent.
 Requires an identifier and signing certificates configured in an Apple developer account.
 
     source venv/bin/activate
-    make publish
+    export ward_signer="SIGNER_HASH"; make publish;
+
+`SIGNER_HASH` should be of type `Developer ID Installer` and can be found by using:
+
+    security find-identity -p basic -v
 
 #### Useful links on building for macOS
 
