@@ -25,7 +25,7 @@ class Ward(rumps.App):
         self.status = rumps.MenuItem(f'Listening on... {self.admin}')
         self.menu.add(self.status)
 
-        ward_home = os.path.join(pathlib.Path.home(), ".ward")
+        ward_home = os.path.join(pathlib.Path.home(), ".keri")
         if not os.path.exists(ward_home):
             os.mkdir(ward_home)
 
