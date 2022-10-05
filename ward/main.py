@@ -17,7 +17,6 @@ logger = logging.getLogger('ward_log')
 
 class Ward(rumps.App):
     HeadDirPath = ""
-    tcp = 5721
     admin = 5621
 
     def __init__(self, name, *args, **kwargs):
@@ -47,7 +46,6 @@ class Ward(rumps.App):
 
             if data is not None:
                 self.admin = int(data['API_PORT'])
-                self.tcp = int(data['TCP_PORT'])
 
                 self.status.title = f'Listening on... {self.admin}'
 
@@ -57,8 +55,6 @@ class Ward(rumps.App):
                       configFile='demo-witness-oobis',
                       configDir=self.HeadDirPath,
                       insecure=True,
-                      tcp=self.tcp,
-                      adminHttpPort=self.admin,
                       headDirPath=self.HeadDirPath)
 
         th = threading.Thread(target=self.dispatch, args=([servery]))
