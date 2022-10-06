@@ -16,7 +16,6 @@ logger = logging.getLogger('ward_log')
 
 
 class Ward(rumps.App):
-    HeadDirPath = ""
     admin = 5621
 
     def __init__(self, name, *args, **kwargs):
@@ -24,20 +23,9 @@ class Ward(rumps.App):
         self.status = rumps.MenuItem(f'Listening on... {self.admin}')
         self.menu.add(self.status)
 
-        kp = os.path.join(pathlib.Path.home(), ".keri")
-        if not os.path.exists(kp):
-            os.mkdir(kp)
-        self.HeadDirPath = pathlib.Path.home()
+        self.start()
 
-        logger.setLevel(logging.DEBUG)
-        handler = RotatingFileHandler(os.path.join(kp, 'ward.log'), maxBytes=2000, backupCount=10)
-        logger.addHandler(handler)
-
-        logger.debug(f'Starting ward {datetime.now()}')
-
-        self.start(kp)
-
-    def start(self, kp):
+    def start(self):
         config_path = os.path.join(pathlib.Path(__file__).parent.resolve(), 'config.json')
         if os.path.exists(config_path):
             with open(config_path) as f:
@@ -50,14 +38,13 @@ class Ward(rumps.App):
                     self.status.title = f'Listening on... {self.admin}'
 
         config_dir = os.path.join(pathlib.Path(__file__).parent.parent.resolve(), "Resources")
-
+        print(f'Listening on... {self.admin}', config_dir)
         servery = booting.Servery(port=self.admin)
         booting.setup(servery=servery,
                       controller="E59KmDbpjK0tRf9Rmc7OlueZVz7LB94DdD3cjQVvPcng",
                       configFile='witnesses.json',
                       configDir=config_dir,
-                      insecure=True,
-                      headDirPath=self.HeadDirPath)
+                      insecure=True)
 
         th = threading.Thread(target=self.dispatch, args=([servery]))
         th.start()
