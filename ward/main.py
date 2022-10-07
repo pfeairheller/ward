@@ -37,13 +37,26 @@ class Ward(rumps.App):
                     self.admin = int(data['API_PORT'])
                     self.status.title = f'Listening on... {self.admin}'
 
-        config_dir = os.path.join(pathlib.Path(__file__).parent.parent.resolve(), "Resources")
-        print(f'Listening on... {self.admin}', config_dir)
+        kp = os.path.join(pathlib.Path.home(), ".keri", "cf")
+        if not os.path.exists(kp):
+            os.makedirs(kp)
+
+        with open(os.path.join(pathlib.Path.home(), ".keri", "cf", "witnesses.json"), "w") as f:
+            json.dump({
+                "dt": "2022-01-20T12:57:59.823350+00:00",
+                "iurls": [
+                    "http://49.12.190.139:5623/oobi",
+                    "http://139.99.193.43:5623/oobi",
+                    "http://20.3.144.86:5623/oobi",
+                    "http://13.245.160.59:5623/oobi"
+                ]
+            }, f, indent=2)
+
+        print(f'Listening on... {self.admin}')
         servery = booting.Servery(port=self.admin)
         booting.setup(servery=servery,
                       controller="E59KmDbpjK0tRf9Rmc7OlueZVz7LB94DdD3cjQVvPcng",
                       configFile='witnesses.json',
-                      configDir=config_dir,
                       insecure=True)
 
         th = threading.Thread(target=self.dispatch, args=([servery]))
