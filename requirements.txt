@@ -5,12 +5,14 @@ blake3==0.3.1
 cbor2==5.4.3
 click==8.1.3
 daemonocle==1.2.3
+docutils==0.19
 falcon==3.1.0
 hio==0.6.7
 hjson==3.0.2
 jsonschema==4.6.0
 -e git+https://git@github.com/WebOfTrust/keripy.git@development#egg=keri
 lmdb==1.3.0
+lockfile==0.12.2
 macholib==1.16
 mnemonic==0.20
 msgpack==1.0.4
@@ -21,6 +23,10 @@ ordered-set==4.1.0
 psutil==5.9.0
 pyinstaller==5.0.1
 pyinstaller-hooks-contrib==2022.4
+pyobjc-core==8.5
+pyobjc-framework-Cocoa==8.5
 pyrsistent==0.18.1
 pysodium==0.7.12
+python-daemon==2.3.1
 PyYAML==6.0
+rumps==0.4.0

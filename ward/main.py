@@ -16,8 +16,6 @@ logger = logging.getLogger('ward_log')
 
 
 class Ward(rumps.App):
-    HeadDirPath = ""
-    tcp = 5721
     admin = 5621
 
     def __init__(self, name, *args, **kwargs):
@@ -25,41 +23,41 @@ class Ward(rumps.App):
         self.status = rumps.MenuItem(f'Listening on... {self.admin}')
         self.menu.add(self.status)
 
-        ward_home = os.path.join(pathlib.Path.home(), ".keri")
-        if not os.path.exists(ward_home):
-            os.mkdir(ward_home)
-
-        self.HeadDirPath = ward_home
-
-        logger.setLevel(logging.DEBUG)
-        handler = RotatingFileHandler(os.path.join(ward_home, 'ward.log'), maxBytes=2000, backupCount=10)
-        logger.addHandler(handler)
-
-        logger.debug(f'Starting ward {datetime.now()}')
-
         self.start()
 
     def start(self):
-        with open(os.path.join(pathlib.Path(__file__).parent.resolve(), 'config.json')) as f:
-            data = json.load(f)
+        config_path = os.path.join(pathlib.Path(__file__).parent.resolve(), 'config.json')
+        if os.path.exists(config_path):
+            with open(config_path) as f:
+                data = json.load(f)
 
-            # logger.debug(f'Loaded config {data} from {self._path}')
+                # logger.debug(f'Loaded config {data} from {self._path}')
 
-            if data is not None:
-                self.admin = int(data['API_PORT'])
-                self.tcp = int(data['TCP_PORT'])
+                if data is not None:
+                    self.admin = int(data['API_PORT'])
+                    self.status.title = f'Listening on... {self.admin}'
 
-                self.status.title = f'Listening on... {self.admin}'
+        kp = os.path.join(pathlib.Path.home(), ".keri", "cf")
+        if not os.path.exists(kp):
+            os.makedirs(kp)
 
+        with open(os.path.join(pathlib.Path.home(), ".keri", "cf", "witnesses.json"), "w") as f:
+            json.dump({
+                "dt": "2022-01-20T12:57:59.823350+00:00",
+                "iurls": [
+                    "http://49.12.190.139:5623/oobi",
+                    "http://139.99.193.43:5623/oobi",
+                    "http://20.3.144.86:5623/oobi",
+                    "http://13.245.160.59:5623/oobi"
+                ]
+            }, f, indent=2)
+
+        print(f'Listening on... {self.admin}')
         servery = booting.Servery(port=self.admin)
         booting.setup(servery=servery,
                       controller="E59KmDbpjK0tRf9Rmc7OlueZVz7LB94DdD3cjQVvPcng",
-                      configFile='demo-witness-oobis',
-                      configDir=self.HeadDirPath,
-                      insecure=True,
-                      tcp=self.tcp,
-                      adminHttpPort=self.admin,
-                      headDirPath=self.HeadDirPath)
+                      configFile='witnesses.json',
+                      insecure=True)
 
         th = threading.Thread(target=self.dispatch, args=([servery]))
         th.start()
