@@ -27,4 +27,5 @@ Requires an identifier and signing certificates configured in an Apple developer
 
 * [Packaging Mac Software for Distribution](https://developer.apple.com/forums/thread/701581#701581021)
 
-Icon is provided as CC0 1.0 Universal (CC0 1.0) Public Domain Dedication.
+##### Icon Attribution
+Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons"> Smashicons </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
