@@ -11,7 +11,6 @@ a = Analysis(
     datas=[
         ('LICENSE', '.'),
         ('icon.png', '.'),
-        ('witnesses.json', 'keri/cf/')
     ],
     hiddenimports=[
         'falcon.app_helpers',
