@@ -41,8 +41,7 @@ class Ward(rumps.App):
 
     def set_status(self, msg):
         logger.debug(msg)
-        self.status = rumps.MenuItem(msg)
-        self.menu.add(self.status)
+        self.status.title = msg
 
     def dispatch_exception(self, args):
         self.set_status('Stopped')
@@ -57,8 +56,6 @@ class Ward(rumps.App):
             with open(config_path) as f:
                 data = json.load(f)
 
-                # logger.debug(f'Loaded config {data} from {self._path}')
-
                 if data is not None:
                     self.admin = int(data['API_PORT'])
                     self.status.title = f'Listening on... {self.admin}'
@@ -71,11 +68,21 @@ class Ward(rumps.App):
             wits = {
                 "dt": "2022-01-20T12:57:59.823350+00:00",
                 "iurls": [
-                    "http://49.12.190.139:5623/oobi",
-                    "http://139.99.193.43:5623/oobi",
-                    "http://20.3.144.86:5623/oobi",
-                    "http://13.245.160.59:5623/oobi",
-                    "http://47.242.47.124:5623/oobi"
+                    "http://49.12.190.139:5623/oobi",   # staging
+                    "http://139.99.193.43:5623/oobi",   # staging
+                    "http://20.3.144.86:5623/oobi",     # staging
+                    "http://13.245.160.59:5623/oobi",   # staging
+                    "http://47.242.47.124:5623/oobi",   # staging
+                    "http://65.21.253.212:5623/oobi",   # production
+                    "http://5.161.69.25:5623/oobi"      # production
+                    "http://51.79.54.121:5623/oobi",    # production
+                    "http://51.161.130.60:5623/oobi",   # production
+                    "http://20.78.61.227:5623/oobi",    # production
+                    "http://102.37.159.99:5623/oobi",   # production
+                    "http://54.233.109.129:5623/oobi",  # production
+                    "http://13.244.119.106:5623/oobi",  # production
+                    "http://8.208.27.153:5623/oobi",    # production
+                    "http://8.210.213.186:5623/oobi",   # production
                 ]
             }
 
