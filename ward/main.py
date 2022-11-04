@@ -37,6 +37,7 @@ class Ward(rumps.App):
         m = f'Listening on... {self.admin}'
         self.status = rumps.MenuItem(f'')
         self.set_status(msg=m)
+        self.menu.add(self.status)
         self.start()
 
     def set_status(self, msg):
