@@ -2,7 +2,6 @@
 import json
 import logging
 import os
-import os.path
 import pathlib
 import threading
 from logging import handlers
@@ -38,6 +37,13 @@ class Ward(rumps.App):
         self.status = rumps.MenuItem(f'')
         self.set_status(msg=m)
         self.menu.add(self.status)
+
+        version = open(os.path.abspath(os.path.join(os.path.dirname(__file__), 'version')), "r")
+        v = version.read()
+        version.close()
+
+        self.version = rumps.MenuItem(f'Version: {v}')
+        self.menu.add(self.version)
         self.start()
 
     def set_status(self, msg):

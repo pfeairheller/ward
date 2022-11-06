@@ -11,6 +11,7 @@ a = Analysis(
     datas=[
         ('LICENSE', '.'),
         ('icon.png', '.'),
+        ('version', '.')
     ],
     hiddenimports=[
         'falcon.app_helpers',

@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='keep',
-    version='0.0.1',
+    version='1.0.0',
     url='',
     license='Apache2',
     author='kgriffin',

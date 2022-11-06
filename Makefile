@@ -5,6 +5,7 @@ clean:
 	rm -rf build dist
 
 build: clean
+	echo $(shell git rev-parse --short HEAD) > version
 	pyinstaller --clean --noconfirm main.spec
 
 run: build
