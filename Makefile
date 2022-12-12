@@ -24,3 +24,9 @@ staple:
 	xcrun stapler staple ward.pkg
 
 publish: build package noterize staple
+
+.PHONY: build-ward
+build-ward:
+	pushd ward; \
+	@docker build -f ../images/ward.dockerfile --tag gleif/ward .
+
